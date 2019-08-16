@@ -88,14 +88,13 @@ stopWatchController::~stopWatchController()
 		;;; 
 		Why????????????????? Forget to free memory????????
 		*/
-		LOG("before_accumulate");
+		// LOG("before_accumulate");
 		/* after code */
 		std::vector<double> rap_list = timer->get_rap_list();
 		double average = std::accumulate(rap_list.begin(), rap_list.end(), 0.0) / rap_list.size();
 		/////////
 
-
-		LOG("after accumulate");
+		// LOG("after accumulate");
 		xlist[i] = i;
 		ylist[i] = average;
 		titles[i] = timer->get_title();

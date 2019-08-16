@@ -31,6 +31,7 @@ namespace matplotlibcpp {
 			PyObject *s_python_function_grid;
 			PyObject *s_python_function_pause;
 			PyObject *s_python_empty_tuple;
+			// add
 			PyObject *s_python_function_bar;
 			PyObject *s_python_function_xticks;
 			PyObject *s_python_function_yticks;
@@ -79,15 +80,11 @@ namespace matplotlibcpp {
 				s_python_function_grid = PyObject_GetAttrString(pymod, "grid");
 				s_python_function_pause = PyObject_GetAttrString(pymod, "pause");
 				s_python_function_xlim = PyObject_GetAttrString(pymod, "xlim");
-
 				s_python_function_save = PyObject_GetAttrString(pylabmod, "savefig");
-
+				// add
 				s_python_function_bar  = PyObject_GetAttrString(pymod, "bar");
-
 				s_python_function_xticks = PyObject_GetAttrString(pymod, "xticks");
-
 				s_python_function_yticks = PyObject_GetAttrString(pymod, "yticks");
-
 				s_python_function_text = PyObject_GetAttrString(pymod, "text");
 				
 				if(!s_python_function_show 
@@ -103,6 +100,7 @@ namespace matplotlibcpp {
 						|| !s_python_function_ylabel
 						|| !s_python_function_grid
 						|| !s_python_function_pause
+						// add
 				        || !s_python_function_bar
 				        || !s_python_function_xticks
 				        || !s_python_function_yticks
@@ -123,6 +121,7 @@ namespace matplotlibcpp {
 					|| !PyFunction_Check(s_python_function_ylabel)
 					|| !PyFunction_Check(s_python_function_grid)
 					|| !PyFunction_Check(s_python_function_pause)
+					// add
 				    || !PyFunction_Check(s_python_function_bar)
 				    || !PyFunction_Check(s_python_function_xticks)
 				    || !PyFunction_Check(s_python_function_yticks)
@@ -210,6 +209,7 @@ namespace matplotlibcpp {
 	}
 
 
+	// add
 	template<typename NumericX, typename NumericY>
 	bool bar(const std::vector<NumericX>& x, const std::vector<NumericY>& y /*, const std::vector<std::string>& t*/)
 	{
@@ -243,8 +243,7 @@ namespace matplotlibcpp {
 		return res;
 	}
 
-
-// Don't move.
+	// add
 	template<typename Numeric>
 	bool xticks(const std::vector<Numeric> ind, const std::vector<std::string>& t)
 	{
@@ -270,6 +269,7 @@ namespace matplotlibcpp {
 		return res;
 	}
 
+	// add
 	template<typename Numeric>
 	bool yticks(const std::vector<Numeric>)
 	{
@@ -358,6 +358,7 @@ namespace matplotlibcpp {
 		Py_DECREF(res);
 	}
 
+	// add
 	template<typename Numeric_x, typename Numeric_y>
 	void text(Numeric_x x, Numeric_y y, Numeric_y t)
 	{
@@ -377,7 +378,7 @@ namespace matplotlibcpp {
 
 	}
 
-  
+	
 	inline void title(const std::string &titlestr)
 	{
 		PyObject* pytitlestr = PyString_FromString(titlestr.c_str());
