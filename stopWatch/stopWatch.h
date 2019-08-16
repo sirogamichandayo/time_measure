@@ -36,7 +36,6 @@ private:
 	vector<double> _rap_list;
 	bool is_start;
 	bool is_end;
-	bool init;
 };
 
 class stopWatchController
