@@ -5,7 +5,7 @@ namespace plt = matplotlibcpp;
 
 #define LOG(msg) std::cout << "[LOG] (" __FILE__ ":" << __LINE__ << ") from " << __func__ << "()\n    " << msg << "\n";
 
-stopWatch::stopWatch() : init(0), is_start(0), is_end(true){}
+stopWatch::stopWatch() : is_start(0), is_end(true){}
 
 void stopWatch::start()
 {
