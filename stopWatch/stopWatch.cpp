@@ -49,10 +49,15 @@ void stopWatch::show()
 
 void stopWatch::wait(const int time)
 {
-	int wait_time = time - _rap_time;
-	if (wait_time > 0)
-		usleep(wait_time);
+	if (is_end && !is_start)	
+	{
+		int wait_time = time - _rap_time;
+		if (wait_time > 0)
+			usleep(wait_time);
+		return;
+	}
 }
+
 
 inline void stopWatch::set_title(string t_)
 {
@@ -69,7 +74,20 @@ inline vector<double> stopWatch::get_rap_list()
 	return _rap_list;
 }
 
+stopWatchController::stopWatchController() : is_save(0) {}
+
 stopWatchController::~stopWatchController()
+{
+	show_graph();
+	if (is_save) save_file();
+}
+
+void stopWatchController::save_file()
+{
+	plt::save(file_name);
+}
+
+void stopWatchController::show_graph() 
 {
 	std::vector<double> xlist(timer_list.size());
 	std::vector<double> ylist(timer_list.size());
@@ -108,8 +126,9 @@ stopWatchController::~stopWatchController()
 	{
 		plt::text(xlist[i], ylist[i], ylist[i]);
 	}
-	plt::show();
-
+	if (!is_save)
+		plt::show();	
+	
 }
 
 int stopWatchController::new_timer(string t_)
@@ -140,6 +159,7 @@ void stopWatchController::wait(const int timer_index, const int time)
 	timer_list[timer_index]->wait(time);
 }
 
+
 void stopWatchController::show_all()
 {
 	for (const auto timer : timer_list)
@@ -151,6 +171,7 @@ void stopWatchController::show_all()
 void stopWatchController::set_file_name(string& t_)
 {
 	file_name = t_;
+	is_save = true;
 }
 
 /*
