@@ -69,9 +69,9 @@ inline string stopWatch::get_title()
 	return _title;
 }
 
-inline vector<double> stopWatch::get_rap_list()
+inline vector<double>* stopWatch::get_rap_list()
 {
-	return _rap_list;
+	return &_rap_list;
 }
 
 stopWatchController::stopWatchController() : is_save(0) {}
@@ -105,11 +105,12 @@ void stopWatchController::show_graph()
 127             __init = __init + *__first;
 		;;; 
 		Why????????????????? Forget to free memory????????
+		I understand, variable life. 8/17/2019
 		*/
 		// LOG("before_accumulate");
 		/* after code */
-		std::vector<double> rap_list = timer->get_rap_list();
-		double average = std::accumulate(rap_list.begin(), rap_list.end(), 0.0) / rap_list.size();
+		std::vector<double> *rap_list = timer->get_rap_list();
+		double average = std::accumulate(rap_list->begin(), rap_list->end(), 0.0) / rap_list->size();
 		/////////
 
 		// LOG("after accumulate");

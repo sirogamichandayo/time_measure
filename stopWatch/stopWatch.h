@@ -25,9 +25,9 @@ public:
 	void lap();
 	void show();
 	void wait(const int time);
-	inline void   set_title(string t_);
-	inline string get_title();
-	inline vector<double> get_rap_list();
+	inline void    set_title(string t_);
+	inline string  get_title();
+	inline vector<double>* get_rap_list();
 
 private:
 	chrono::system_clock::time_point _start;
