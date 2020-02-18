@@ -51,7 +51,6 @@ int main()
 
 	for (int k = 0; k < times; k++)
 	{
-		timer_con->start(COUNTER);
 		for (int i = 0; i < vecvec.size(); ++i) 
 		{
 			for (int j = 0; j < vecvec[i].size(); ++j) 

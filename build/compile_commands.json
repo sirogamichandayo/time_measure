@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/sirogami/programming/measure_time/build",
+  "command": "/usr/bin/clang++-6.0    -g   -o CMakeFiles/measure_time.dir/measure_time.cpp.o -c /home/sirogami/programming/measure_time/measure_time.cpp",
+  "file": "/home/sirogami/programming/measure_time/measure_time.cpp"
+}
+]
