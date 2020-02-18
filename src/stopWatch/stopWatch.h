@@ -15,8 +15,6 @@
 
 using namespace std;
 
-const string DIRNAME = "timedata/";
-
 class stopWatch
 {
 public:
