@@ -18,7 +18,7 @@ using namespace std;
 class stopWatch
 {
 public:
-	stopWatch() : is_start(0), is_end(true) {};
+	stopWatch() : _is_start(0), _is_end(true) {};
 	void start();
 	void lap();
 	inline void    set_title(const string& t_);
@@ -30,27 +30,28 @@ private:
 	string _title;
 	double _rap_time;
 	vector<double> _rap_list;
-	bool is_start;
-	bool is_end;
+	bool _is_start;
+	bool _is_end;
 };
 
 class stopWatchController
 {
 public:
-	stopWatchController();
+	stopWatchController() : _is_save(false) {};
 	~stopWatchController();
 	int new_timer(const string& t_);
 	void start(const int timer_index);
 	void lap(const int timer_index);
 	void show_graph();
 	void set_file_name(const string& t_);
+	void set_title_name(const string& t_);
 	void save_file();
 
 private:
 	vector<shared_ptr<stopWatch>> timer_list;
-	// std::map<string, vector<double>> _rap_list_all;
-	string file_name;
-	bool is_save;
+	string _file_name;
+	string _title;
+	bool _is_save;
 };
 
 

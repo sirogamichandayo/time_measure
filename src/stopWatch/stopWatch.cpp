@@ -7,29 +7,29 @@ namespace plt = matplotlibcpp;
 
 void stopWatch::start()
 {
-	if (is_end && !is_start)
+	if (_is_end && !_is_start)
 	{
 		this->_start = chrono::system_clock::now();
-		is_end = false;
-		is_start = true;
+		_is_end = false;
+		_is_start = true;
 		return;
 	}
-	LOG("stopWatch error.");
+	LOG("start()もしくはlap()が適切に呼び出されてない可能性があります。");
 	exit(0);
 }
 
 void stopWatch::lap()
 {
-	if (!is_end && is_start)	
+	if (!_is_end && _is_start)	
 	{
 		chrono::system_clock::time_point end = chrono::system_clock::now();
 		this->_rap_time = static_cast<double>(chrono::duration_cast<chrono::microseconds>(end - this->_start).count() / 1000.0);
 		_rap_list.push_back(_rap_time);
-		is_end = true;
-		is_start = false;
+		_is_end = true;
+		_is_start = false;
 		return;
 	}
-	LOG("stopwatch error.")
+	LOG("start()もしくはlap()が適切に呼び出されていない可能性があります。");
 	exit(0);
 }
 
@@ -50,17 +50,18 @@ inline void stopWatch::get_rap_list(vector<double>* vec_)
 
 
 //======================================================
-stopWatchController::stopWatchController() : is_save(0) {}
+//=================stopWatchController==================
+//======================================================
 
 stopWatchController::~stopWatchController()
 {
 	show_graph();
-	if (is_save) save_file();
+	if (_is_save) save_file();
 }
 
 void stopWatchController::save_file()
 {
-	plt::save(file_name);
+	plt::save(_file_name);
 }
 
 void stopWatchController::show_graph() 
@@ -73,7 +74,8 @@ void stopWatchController::show_graph()
 	{
 		std::vector<double> rap_list;
 		timer->get_rap_list(&rap_list);
-		double average = std::accumulate(rap_list.begin(), rap_list.end(), 0.0) / rap_list.size();
+		double average = std::accumulate(rap_list.begin(), rap_list.end(), 0.0) 
+							/ rap_list.size();
 		/////////
 
 		xlist[i] = i;
@@ -83,13 +85,14 @@ void stopWatchController::show_graph()
 	}
 
 	plt::bar(xlist, ylist);
-	plt::title("Process time[ms]");
+	plt::title(_title);
+	plt::ylabel("Process time[ms]");
 	plt::xticks(xlist, titles);
 	for (size_t i = 0; i < xlist.size(); i++)
 	{
 		plt::text(xlist[i], ylist[i], ylist[i]);
 	}
-	if (!is_save)
+	if (!_is_save)
 		plt::show();	
 }
 
@@ -113,6 +116,11 @@ void stopWatchController::lap(const int timer_index)
 
 void stopWatchController::set_file_name(const string& t_)
 {
-	file_name = t_;
-	is_save = true;
+	_file_name = t_;
+	_is_save = true;
+}
+
+void stopWatchController::set_title_name(const string& t_)
+{
+	_title = t_;
 }
