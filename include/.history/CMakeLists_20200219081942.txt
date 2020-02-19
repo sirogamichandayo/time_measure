@@ -1,5 +1,0 @@
-cmake_minimum_required(VERSION 2.8)
-project(test_measure_time CXX)
-# register directory
-add_subdirectory(src)
-add_subdirectory(test)

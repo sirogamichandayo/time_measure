@@ -1,7 +1,0 @@
-add_library(stopWatch
-            STATIC
-            stopWatch.cpp)
-# put include directory            
-target_include_directories(stopwatch
-    PUBLIC ${PROJECT_CURRENT_SOURCE_DIR}/matplotlib
-    )            
