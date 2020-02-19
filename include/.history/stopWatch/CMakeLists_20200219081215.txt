@@ -1,0 +1,4 @@
+add_library(stopwatch
+            STATIC
+            stopWatch.cpp)
+            

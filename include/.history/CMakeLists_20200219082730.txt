@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 2.8)
+project(measure_time CXX)
+# register directory
+add_subdirectory(src/stopWatch)
+add_subdirectory(test)
