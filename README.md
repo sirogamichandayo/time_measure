@@ -100,7 +100,7 @@ int main()
 $ g++ -o test test.cpp -lpython2.7
 $ ./a.out
 ```
-file:///home/sirogami/Pictures/Figure_1.png
+(file:///home/sirogami/Pictures/Figure_1.png)
 
 
  
