@@ -27,7 +27,7 @@ $ cmake ..
 $ make 
 $ ./test/measure_time (コマンドライン引数でファイル名を指定すればそのファイルに保存する、指定しなければ表示のみを行う)
 ```
-
+![Image description](https://github.com/sirogamiemacs/time_measure/blob/master/img/a.png)
 ## 実際の使用例
 
 ```bash
@@ -98,7 +98,7 @@ int main()
 ```
 ```
 $ g++ -o test test.cpp -lpython2.7
-$ ./a.out
+$ ./test
 ```
 ![Image description](https://github.com/sirogamiemacs/time_measure/blob/master/img/Figure_1.png?raw=true
 )
