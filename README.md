@@ -42,6 +42,7 @@ $ tree
 ```
 
 ```test.cpp
+// test.cpp
 #include <thread>
 #include <chrono>
 #include "measure_time/stopWatch.h"
@@ -99,6 +100,9 @@ int main()
 $ g++ -o test test.cpp -lpython2.7
 $ ./a.out
 ```
+file:///home/sirogami/Pictures/Figure_1.png
+
+
  
 # License
 [MIT license](https://en.wikipedia.org/wiki/MIT_License).
