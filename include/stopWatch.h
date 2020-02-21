@@ -204,6 +204,8 @@ void stopWatchController::create_plot()
 		plt::named_plot(s ,x, y, _plot_style[timer_i]);
 		plt::legend();
 	}
+	plt::title(_title);
+	plt::ylabel("Process time[ms]");
 }
 
 int stopWatchController::new_timer(const string& t_)
