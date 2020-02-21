@@ -54,7 +54,7 @@ $ ./measure_test ave ave_
 ```
 
 ## 実際の使用例
-
+### 基本
 ```bash
 $ tree
 ```
@@ -141,7 +141,15 @@ $ ./test
 ![Image description](https://github.com/sirogamiemacs/time_measure/blob/master/img/test_bar2.png?raw=true
 )
 
- 
+### 折れ線グラフのスタイルの変更
+現状、折れ線グラフが14本まで引けるようにスタイルを設定していますが、それ以上のグラフが欲しい際は`set_plot_style()`を使うことでスタイルの設定が出来ます。
+```
+        stopWatchController timer_con;
+        vector<string> s{"b", "g", "r", "c"};
+        timer_con.set_plot_style(s.begin(), s.end());
+```
+設定できるスタイルはmatplotlib.pyplot.plotのfmtと基本同じです。(versionの違いにより一部使用不可能です)
+https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.plot.html?highlight=plot#matplotlib.pyplot.plot
 # License
 [MIT license](https://en.wikipedia.org/wiki/MIT_License).
  
