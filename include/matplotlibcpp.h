@@ -501,7 +501,7 @@ namespace matplotlibcpp {
 		if(!res) throw std::runtime_error("Call to save() failed.");
 
 		Py_DECREF(pyfilename);
-		Py_DECREF(args);
+		// Py_DECREF(args); // Segmentation fauld(core dumped)
 		Py_DECREF(res);
 	}
 
