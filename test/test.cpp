@@ -19,7 +19,7 @@ int main(int argc, char** argv)
 	{
 		LOG("コマンドライン引数の数が少ないです。");
 		exit(-1);
-	} 
+	}
 	if (static_cast<string>(argv[1]) == static_cast<string>("each"))	
 		timer_con.set_what_plot(stopwatch::PLOT);
 	else if (static_cast<string>(argv[1]) == static_cast<string>("ave"))
@@ -32,72 +32,33 @@ int main(int argc, char** argv)
 		exit(-1);
 	}
 
-	std::string title1 = "for_each";
-	std::string title2 = "range_for";
-	std::string title3 = "counter";
-	std::string title4 = "at";
-	
-	unsigned const int FOR_EACH  = timer_con.new_timer(title1);
-	unsigned const int RANGE_FOR = timer_con.new_timer(title2);
-	unsigned const int COUNTER   = timer_con.new_timer(title3);
-	unsigned const int AT		 = timer_con.new_timer(title4);
+	unsigned const int P1 = timer_con.new_timer("process1");
+	unsigned const int P2 = timer_con.new_timer("process2");
+	unsigned const int P3 = timer_con.new_timer("process3");
+	unsigned const int P4 = timer_con.new_timer("process4");
 
+	int times = 30;
 
-	std::vector<std::vector<int>> vecvec(1000, std::vector<int>(1000, 0));
-	unsigned const int times = 50;
-
-	for (int k = 0; k < times; ++k)
+	for (int i = 0; i < times+1; ++i)	
 	{
-		timer_con.start(FOR_EACH);
-		for_each(vecvec.begin(), vecvec.end(), [](vector<int>& vec)
-		{
-			for_each(vec.begin(), vec.end(), [](int& elem)
-			{
-				++elem;	
-			});
-		});
-		timer_con.lap(FOR_EACH);
-	}
+		timer_con.start(P1);
+		if (i == 0) usleep(times * 1000);
+		timer_con.lap(P1);
 
-	for (int k = 0; k < times; ++k)
-	{
-		timer_con.start(RANGE_FOR);
-		for (vector<int>& vec : vecvec)
-		{
-			for (int& elem : vec)
-			{
-				++elem;	
-			}
-		}
-		timer_con.lap(RANGE_FOR);
-	}
+		timer_con.start(P2);
+		int t;
+		if (i == times) t = 0;
+		else		 t = times*1000;
+		usleep(t);
+		timer_con.lap(P2);
 
-	for (int k = 0; k < times; ++k)
-	{
-		timer_con.start(COUNTER);
-		int n = vecvec.size();
-		for (int i = 0; i < n; ++i) 
-			{
-			for (int j = 0; j < vecvec[i].size(); ++j) 
-			{
-				++vecvec[i][j];
-			}		
-		}
-		timer_con.lap(COUNTER);
-	}
+		timer_con.start(P3);
+		usleep(i * 1000);
+		timer_con.lap(P3);
 
-	for (int k = 0; k < times; ++k)
-	{
-		timer_con.start(AT);
-		int n = vecvec.size();
-		for (int i = 0; i < n; ++i) 
-			{
-			for (int j = 0; j < vecvec[i].size(); ++j) 
-			{
-				++vecvec.at(i).at(j);
-			}		
-		}
-		timer_con.lap(AT);
-	}
+		timer_con.start(P4);
+		usleep((times - i) * 1000);
+		timer_con.lap(P4);
 
+	}
 }
