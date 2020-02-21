@@ -5,7 +5,7 @@
  
 # Features
  
-* 時間計測(ネスト可能)
+* 時間計測(折れ線、棒、ネスト可能)
 * 結果のグラフ表示、保存
  
 # Requirement
@@ -29,6 +29,16 @@ $ cd test
 $ ./measure_test each
 ```
 ![Image description](https://github.com/sirogamiemacs/time_measure/blob/master/img/plot_test.png)
+```
+$ ./measure_test ave
+```
+![Image description](https://github.com/sirogamiemacs/time_measure/blob/master/img/bar_test.png)
+```bash
+$ ./measure_test each each
+[LOG] (<YOUR DIR>/measure_time/test/../include/stopWatch.h:169) from save_file()
+    save in each.png // each.pngとしてグラフが保存されました。
+```
+
 ## 実際の使用例
 
 ```bash
@@ -56,9 +66,15 @@ int main()
     // initialize    
     // 必須。これですべてのストップウォッチを管理する。
     stopWatchController timer_con; 
+    // 必須。グラフの形式を設定する。
+    // 今の所
+    // stopwatch::BAR -> 棒グラフ
+    // stopwatch::PLOT -> 折れ線グラフ
+    // の２つのみです。
+    timer_con.set_format(stopwatch::BAR);
     // 任意。タイトルの設定
     timer_con.set_title_name("compare"); 
-    // 任意。ファイル名の設定。ファイルにグラフが保存される様になる。(表示はされなくなる)
+    // 任意。ファイル名の設定。この関数を呼び出すとファイルにグラフが保存される様になる。(表示はされなくなる)
     // timer_con.set_file_name("test");
 
     // 処理ごとのタイマーを作成します。引数にラベルを指定し、返り値を用いてタイマーを制御します。
@@ -102,6 +118,13 @@ $ g++ -o test test.cpp -lpython2.7
 $ ./test
 ```
 ![Image description](https://github.com/sirogamiemacs/time_measure/blob/master/img/Figure_1.png?raw=true
+)
+
+`timer_con.set_format(stopwatch::BAR);` -> `timer_con.set_format(stopwatch::PLOT);`
+に変更してコンパイル、実行
+
+
+![Image description](https://github.com/sirogamiemacs/time_measure/blob/master/img/test_bar2.png?raw=true
 )
 
  
