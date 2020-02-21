@@ -5,7 +5,7 @@
  
 # Features
  
-* 時間計測(ネスト可能)
+* 時間計測(折れ線、棒、ネスト可能)
 * 結果のグラフ表示、保存
  
 # Requirement
@@ -26,11 +26,35 @@ $ cd build
 $ cmake ..
 $ make 
 $ cd test
+```
+**折れ線グラフ(表示)**
+```
 $ ./measure_test each
 ```
 ![Image description](https://github.com/sirogamiemacs/time_measure/blob/master/img/plot_test.png)
-## 実際の使用例
 
+**棒グラフ(表示)**
+```
+$ ./measure_test ave
+```
+![Image description](https://github.com/sirogamiemacs/time_measure/blob/master/img/bar_test.png)
+
+**折れ線グラフ(保存)**
+```bash
+$ ./measure_test each each_
+[LOG] (<YOUR DIR>/measure_time/test/../include/stopWatch.h:169) from save_file()
+    save in each_.png // each_.pngとしてグラフが保存されました。
+```
+
+**折れ線グラフ(保存)**
+```bash
+$ ./measure_test ave ave_
+[LOG] (<YOUR DIR>/measure_time/test/../include/stopWatch.h:169) from save_file()
+    save in ave_.png // ave_.pngとしてグラフが保存されました。
+```
+
+## 実際の使用例
+### 基本
 ```bash
 $ tree
 ```
@@ -56,9 +80,15 @@ int main()
     // initialize    
     // 必須。これですべてのストップウォッチを管理する。
     stopWatchController timer_con; 
+    // 必須。グラフの形式を設定する。
+    // 今の所
+    // stopwatch::BAR -> 棒グラフ
+    // stopwatch::PLOT -> 折れ線グラフ
+    // の２つのみです。
+    timer_con.set_format(stopwatch::BAR);
     // 任意。タイトルの設定
     timer_con.set_title_name("compare"); 
-    // 任意。ファイル名の設定。ファイルにグラフが保存される様になる。(表示はされなくなる)
+    // 任意。ファイル名の設定。この関数を呼び出すとファイルにグラフが保存される様になる。(表示はされなくなる)
     // timer_con.set_file_name("test");
 
     // 処理ごとのタイマーを作成します。引数にラベルを指定し、返り値を用いてタイマーを制御します。
@@ -104,7 +134,22 @@ $ ./test
 ![Image description](https://github.com/sirogamiemacs/time_measure/blob/master/img/Figure_1.png?raw=true
 )
 
- 
+`timer_con.set_format(stopwatch::BAR);` -> `timer_con.set_format(stopwatch::PLOT);`
+に変更してコンパイル、実行
+
+
+![Image description](https://github.com/sirogamiemacs/time_measure/blob/master/img/test_bar2.png?raw=true
+)
+
+### 折れ線グラフのスタイルの変更
+現状、折れ線グラフが14本まで引けるようにスタイルを設定していますが、それ以上のグラフが欲しい際は`set_plot_style()`を使うことでスタイルの設定が出来ます。
+```
+        stopWatchController timer_con;
+        vector<string> s{"b", "g", "r", "c"};
+        timer_con.set_plot_style(s.begin(), s.end());
+```
+設定できるスタイルはmatplotlib.pyplot.plotのfmtと基本同じです。(versionの違いにより一部使用不可能です)
+https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.plot.html?highlight=plot#matplotlib.pyplot.plot
 # License
 [MIT license](https://en.wikipedia.org/wiki/MIT_License).
  
