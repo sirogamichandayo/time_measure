@@ -26,17 +26,31 @@ $ cd build
 $ cmake ..
 $ make 
 $ cd test
+```
+**折れ線グラフ(表示)**
+```
 $ ./measure_test each
 ```
 ![Image description](https://github.com/sirogamiemacs/time_measure/blob/master/img/plot_test.png)
+
+**棒グラフ(表示)**
 ```
 $ ./measure_test ave
 ```
 ![Image description](https://github.com/sirogamiemacs/time_measure/blob/master/img/bar_test.png)
+
+**折れ線グラフ(保存)**
 ```bash
-$ ./measure_test each each
+$ ./measure_test each each_
 [LOG] (<YOUR DIR>/measure_time/test/../include/stopWatch.h:169) from save_file()
-    save in each.png // each.pngとしてグラフが保存されました。
+    save in each_.png // each_.pngとしてグラフが保存されました。
+```
+
+**折れ線グラフ(保存)**
+```bash
+$ ./measure_test ave ave_
+[LOG] (<YOUR DIR>/measure_time/test/../include/stopWatch.h:169) from save_file()
+    save in ave_.png // ave_.pngとしてグラフが保存されました。
 ```
 
 ## 実際の使用例
