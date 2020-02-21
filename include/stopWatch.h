@@ -12,6 +12,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 #define STOPWATCH_H
 
 #include <memory>
+#include <regex>
 #include <unistd.h>
 #include <stdio.h>
 #include <chrono>
@@ -84,7 +85,7 @@ template <class Iterator>
 	void set_plot_style(Iterator begin, Iterator end);
 	void set_file_name(const string& t_);
 	void set_title_name(const string& t_);
-	void set_what_plot(const int& w_);
+	void set_format(const int& w_);
 	void save_file();
 
 private:
@@ -93,7 +94,7 @@ private:
 	string _file_name;
 	string _title;
 	bool _is_save;
-	int _what_plot;
+	int _format;
 };
 //---
 
@@ -147,13 +148,11 @@ stopWatchController::~stopWatchController()
 {
 	if (_plot_style_list.size() < _timer_list.size() )
 	{
-		LOG("_plot_style_listの数が足りません。\
-			set_plot_style()を用いてスタイルを追加する、\
-			もしくは、その引数を確認してください。");
+		LOG("_plot_style_listの数が足りません。set_plot_style()を用いてスタイルを追加する、もしくは、その引数を確認してください。");
 		exit(-1);
 	}
 
-	switch (_what_plot)
+	switch (_format)
 	{
 		case stopwatch::BAR:  create_bar(); break;
 		case stopwatch::PLOT: create_plot(); break;
@@ -239,7 +238,33 @@ void stopWatchController::lap(const int timer_index)
 template <class Iterator>
 void stopWatchController::set_plot_style(Iterator begin, Iterator end)
 {
-	_plot_style_list.reserve(distance(begin, end));
+	vector<string> line_style_list{"-", "--", "-.", ":"};
+	regex pat{R"([.,ov^<>12345sp*hH+xDd|_].*[bgrcmykw])"};
+	smatch matches;
+	auto b = begin, e = end;
+	for (;b != e; ++b)
+	{
+		// match	
+		if(regex_search(*b, matches, pat))
+		{
+			string s{move(matches.str())};
+			auto r = find(line_style_list.begin(), line_style_list.end(),
+							s.substr(1, s.size()-2));
+			if (r == line_style_list.end())
+			{
+				// !!!!!!!!!!!ONLY GOTO!!!!!!!!!!!
+				goto STYLE_ERROR;
+			}
+		}
+		else
+		{
+// !!!!!!!!!!!ONLY GOTO!!!!!!!!!!!!!!!!!			
+STYLE_ERROR:				
+			LOG("対応していないスタイルが渡されている可能性があります。<" + static_cast<string>(*b) + ">");
+			exit(-1);
+		}
+	}
+	_plot_style_list.resize(distance(begin, end));
 	move(begin, end, _plot_style_list.begin());
 }
 
@@ -254,8 +279,8 @@ void stopWatchController::set_title_name(const string& t_)
 	_title = move(t_);
 }
 
-void stopWatchController::set_what_plot(const int& w_)
+void stopWatchController::set_format(const int& w_)
 {
-	_what_plot = w_;
+	_format = w_;
 }
 #endif	// TIME
