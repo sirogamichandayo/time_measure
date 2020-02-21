@@ -68,8 +68,9 @@ class stopWatchController
 public:
 	stopWatchController() : _is_save(false) 
 	{
-		_plot_style = move(vector<string>
-					{".:b", ".:g", ".:r", ".:c", ".:m", ".:y", ".:k", ".:w"});
+		_plot_style_list = move(vector<string>
+					{".:b", ".:g", ".:r", ".:c", ".:m", ".:y", ".:k",
+					".-b", ".-g", ".-r", ".-c", ".-m", ".-y", ".-k"});
 	} 
 	~stopWatchController();
 	int new_timer(const string& t_);
@@ -78,7 +79,9 @@ public:
 
 	void create_bar();
 	void create_plot();
-	
+
+template <class Iterator>	
+	void set_plot_style(Iterator begin, Iterator end);
 	void set_file_name(const string& t_);
 	void set_title_name(const string& t_);
 	void set_what_plot(const int& w_);
@@ -86,7 +89,7 @@ public:
 
 private:
 	vector<stopWatch> _timer_list;
-	vector<string>    _plot_style;
+	vector<string>    _plot_style_list;
 	string _file_name;
 	string _title;
 	bool _is_save;
@@ -142,6 +145,14 @@ inline int stopWatch::get_rap_list_size()
 //======================================================
 stopWatchController::~stopWatchController()
 {
+	if (_plot_style_list.size() < _timer_list.size() )
+	{
+		LOG("_plot_style_listの数が足りません。\
+			set_plot_style()を用いてスタイルを追加する、\
+			もしくは、その引数を確認してください。");
+		exit(-1);
+	}
+
 	switch (_what_plot)
 	{
 		case stopwatch::BAR:  create_bar(); break;
@@ -149,12 +160,13 @@ stopWatchController::~stopWatchController()
 		default: LOG("表示形式が指定されていません。"); exit(-1); 
 	}
 
-	if (_is_save) plt::save(_title);
+	if (_is_save) save_file();
 	else		  plt::show();
 }
 
 void stopWatchController::save_file()
 {
+	LOG("save in " + static_cast<string>(_file_name) + ".png");
 	plt::save(_file_name);
 }
 
@@ -201,7 +213,7 @@ void stopWatchController::create_plot()
 		_timer_list[timer_i].get_rap_list(&y);
 		std::string s;
 		_timer_list[timer_i].get_title(&s);
-		plt::named_plot(s ,x, y, _plot_style[timer_i]);
+		plt::named_plot(s ,x, y, _plot_style_list[timer_i]);
 		plt::legend();
 	}
 	plt::title(_title);
@@ -222,6 +234,13 @@ void stopWatchController::start(const int timer_index)
 void stopWatchController::lap(const int timer_index)
 {
 	_timer_list[timer_index].lap();
+}
+
+template <class Iterator>
+void stopWatchController::set_plot_style(Iterator begin, Iterator end)
+{
+	_plot_style_list.reserve(distance(begin, end));
+	move(begin, end, _plot_style_list.begin());
 }
 
 void stopWatchController::set_file_name(const string& t_)
