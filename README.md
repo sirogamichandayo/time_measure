@@ -25,9 +25,10 @@ $ mkdir build
 $ cd build
 $ cmake ..
 $ make 
-$ ./test/measure_time (コマンドライン引数でファイル名を指定すればそのファイルに保存する、指定しなければ表示のみを行う)
+$ cd test
+$ ./measure_test each
 ```
-![Image description](https://github.com/sirogamiemacs/time_measure/blob/master/img/a.png)
+![Image description](https://github.com/sirogamiemacs/time_measure/blob/master/img/plot_test.png)
 ## 実際の使用例
 
 ```bash
