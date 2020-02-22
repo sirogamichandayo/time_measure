@@ -43,14 +43,14 @@ $ ./measure_test ave
 ```bash
 $ ./measure_test each each_
 [LOG] (<YOUR DIR>/measure_time/test/../include/stopWatch.h:169) from save_file()
-    save in each_.png // each_.pngとしてグラフが保存されました。
+    save in each_.png
 ```
 
 **折れ線グラフ(保存)**
 ```bash
 $ ./measure_test ave ave_
 [LOG] (<YOUR DIR>/measure_time/test/../include/stopWatch.h:169) from save_file()
-    save in ave_.png // ave_.pngとしてグラフが保存されました。
+    save in ave_.png
 ```
 
 ## 実際の使用例
@@ -84,25 +84,25 @@ int main()
     // 今の所
     // stopwatch::BAR -> 棒グラフ
     // stopwatch::PLOT -> 折れ線グラフ
-    // の２つのみです。
+    // の２つのみ
     timer_con.set_format(stopwatch::BAR);
     // 任意。タイトルの設定
     timer_con.set_title_name("compare"); 
     // 任意。ファイル名の設定。この関数を呼び出すとファイルにグラフが保存される様になる。(表示はされなくなる)
     // timer_con.set_file_name("test");
 
-    // 処理ごとのタイマーを作成します。引数にラベルを指定し、返り値を用いてタイマーを制御します。
+    // 処理ごとのタイマーを作成 引数にラベルを指定し、返り値を用いてタイマーを制御
     unsigned const int PROCESS1 = timer_con.new_timer("process1");
     unsigned const int PROCESS2 = timer_con.new_timer("process2");
     unsigned const int PROCESS3 = timer_con.new_timer("process3");
     unsigned const int PROCESS4 = timer_con.new_timer("process4");
 
     
-    // 時間計測。下の形が基本になる。複数回計測した際は自動的に平均が計算されます。
+    // 時間計測。下の形が基本になる。棒グラフにおいて複数回計測した際は自動的に平均が計算される。
     // timer.start(TIMER);
     // process
     // timer.lap(TIMER);
-    steady_clock::time_point t1, t2;
+
     for (int i = 0; i < 10; ++i)
     {
         //=======PROCESS1===
@@ -142,13 +142,13 @@ $ ./test
 )
 
 ### 折れ線グラフのスタイルの変更
-現状、折れ線グラフが14本まで引けるようにスタイルを設定していますが、それ以上のグラフが欲しい際は`set_plot_style()`を使うことでスタイルの設定が出来ます。
+現状、折れ線グラフが14本まで引けるようにスタイルを設定していますが、それ以上のグラフが欲しい際や、グラフを色等でグループ分けするためにスタイルを変更したい際は`set_plot_style()`メソッドを使用してください。
 ```
         stopWatchController timer_con;
-        vector<string> s{"b", "g", "r", "c"};
+        vector<string> s{"o-g", "x-g", "o-r", "x-r"};
         timer_con.set_plot_style(s.begin(), s.end());
 ```
-設定できるスタイルはmatplotlib.pyplot.plotのfmtと基本同じです。(versionの違いにより一部使用不可能です)
+設定できるスタイルは`matplotlib.pyplot.plot`のfmtと同じです。(versionの違いにより一部使用不可能になるかもしれません。)
 https://matplotlib.org/3.1.1/api/_as_gen/matplotlib.pyplot.plot.html?highlight=plot#matplotlib.pyplot.plot
 # License
 [MIT license](https://en.wikipedia.org/wiki/MIT_License).
