@@ -247,7 +247,6 @@ void stopWatchController::set_plot_style(Iterator begin, Iterator end)
 		if(!regex_search(*b, matches, pat))
 		{
 // !!!!!!!!!!!ONLY GOTO!!!!!!!!!!!!!!!!!			
-STYLE_ERROR:				
 			LOG("対応していないスタイルが渡されている可能性があります。<\"" + static_cast<string>(*b) + "\">");
 		}
 	}
