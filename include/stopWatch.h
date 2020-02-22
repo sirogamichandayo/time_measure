@@ -238,8 +238,7 @@ void stopWatchController::lap(const int timer_index)
 template <class Iterator>
 void stopWatchController::set_plot_style(Iterator begin, Iterator end)
 {
-	vector<string> line_style_list{"-", "--", "-.", ":"};
-	regex pat{R"([.,ov^<>12345sp*hH+xDd|_].*[bgrcmykw])"};
+	regex pat{R"(^([.,ov^<>12345sp*hH+xDd|_]?((--)|(-\.)|-|:)?[bgrcmykw]?)$)"};
 	smatch matches;
 	auto b = begin, e = end;
 	for (;b != e; ++b)
@@ -247,10 +246,7 @@ void stopWatchController::set_plot_style(Iterator begin, Iterator end)
 		// match	
 		if(regex_search(*b, matches, pat))
 		{
-			string s{move(matches.str())};
-			auto r = find(line_style_list.begin(), line_style_list.end(),
-							s.substr(1, s.size()-2));
-			if (r == line_style_list.end())
+			if (matches.str().size() == 0)	
 			{
 				// !!!!!!!!!!!ONLY GOTO!!!!!!!!!!!
 				goto STYLE_ERROR;
