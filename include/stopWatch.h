@@ -243,21 +243,12 @@ void stopWatchController::set_plot_style(Iterator begin, Iterator end)
 	auto b = begin, e = end;
 	for (;b != e; ++b)
 	{
-		// match	
-		if(regex_search(*b, matches, pat))
-		{
-			if (matches.str().size() == 0)	
-			{
-				// !!!!!!!!!!!ONLY GOTO!!!!!!!!!!!
-				goto STYLE_ERROR;
-			}
-		}
-		else
+		// not match	
+		if(!regex_search(*b, matches, pat))
 		{
 // !!!!!!!!!!!ONLY GOTO!!!!!!!!!!!!!!!!!			
 STYLE_ERROR:				
-			LOG("対応していないスタイルが渡されている可能性があります。<" + static_cast<string>(*b) + ">");
-			exit(-1);
+			LOG("対応していないスタイルが渡されている可能性があります。<\"" + static_cast<string>(*b) + "\">");
 		}
 	}
 	_plot_style_list.resize(distance(begin, end));
